@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthForm from "./AuthForm";
 import FormContainer from "./FormContainer";
-import { useState } from "react";
+import RedirectToPlantsIfSignedIn from "shared-components/RedirectToPlantsIfSignedIn";
 import * as userService from "services/user";
 
 const SignUpPage = () => {
@@ -9,59 +10,61 @@ const SignUpPage = () => {
     const navigate = useNavigate();
 
     return (
-    <FormContainer>
-        <div className="text-red-700 font-lato">{error}</div>
-        <AuthForm
-            fields={[
-                {
-                    label: "username",
-                    type: "text"
-                },
-                {
-                    label: "password",
-                    type: "password"
-                },
-                {
-                    label: "confirm password",
-                    type: "password"
-                }
-            ]}
-            submitButtonLabel="create account"
-            onSubmit={async (values) => {
-                if(values.username.length < 4) {
-                    setError("username too short");
-                    return;
-                }
-
-                if(values.password.length < 4) {
-                    setError("password too short");
-                    return;
-                }
-
-                if(values.password !== values["confirm password"]) {
-                    setError("password does not match");
-                    return;
-                }
-                const response = await userService.createUser({
-                    username: values.username,
-                    password: values.password
-                });
-
-                if(response.status === 201) {
-                    setError("");
-                    navigate("/", {
-                        state: {
-                            accountCreated: true
+        <RedirectToPlantsIfSignedIn>
+            <FormContainer>
+                <div className="text-red-700 font-lato">{error}</div>
+                <AuthForm
+                    fields={[
+                        {
+                            label: "username",
+                            type: "text"
+                        },
+                        {
+                            label: "password",
+                            type: "password"
+                        },
+                        {
+                            label: "confirm password",
+                            type: "password"
                         }
-                    });
-                } else {
-                    const data = await response.json();
-                    setError(data.error);
-                }
-            }}
-        />
-        <Link to="/" className="text-sm text-green-600">Sign in</Link>
-    </FormContainer>
+                    ]}
+                    submitButtonLabel="create account"
+                    onSubmit={async (values) => {
+                        if (values.username.length < 4) {
+                            setError("username too short");
+                            return;
+                        }
+
+                        if (values.password.length < 4) {
+                            setError("password too short");
+                            return;
+                        }
+
+                        if (values.password !== values["confirm password"]) {
+                            setError("password does not match");
+                            return;
+                        }
+                        const response = await userService.createUser({
+                            username: values.username,
+                            password: values.password
+                        });
+
+                        if (response.status === 201) {
+                            setError("");
+                            navigate("/", {
+                                state: {
+                                    accountCreated: true
+                                }
+                            });
+                        } else {
+                            const data = await response.json();
+                            setError(data.error);
+                        }
+                    }}
+                />
+                <Link to="/" className="text-sm text-green-600">Sign in</Link>
+            </FormContainer>
+        </RedirectToPlantsIfSignedIn>
     );
 };
 
