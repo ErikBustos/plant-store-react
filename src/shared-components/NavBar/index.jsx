@@ -1,20 +1,34 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import SessionContext from "context/SessionContext";
 
 const NavBar = () => {
-    const { username } = useContext(SessionContext);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const { username, signOut } = useContext(SessionContext);
 
-    return <nav className="bg-emerald-800 flex justify-center">
+    return <nav className="bg-emerald-800 flex justify-center"
+        onMouseLeave={() => setUserMenuOpen(false)}>
         <div className="w-full max-w-5xl flex items-center px-8 py-2 justify-between">
             <div className="text-2xl text-white font-playfair flex flex-col items-center">
                 <img className="w-10" src="https://static-task-assets.react-formula.com/capstone_logo_light.png" />
                 Rica's Plants
             </div>
-            <div className="">
-                <button className="text-emerald-200 flex items-center">
-                    <i className="fa-solid fa-user text-xl"></i>
-                    {username}
-                </button>
+            <div className="relative flex justify-end flex-1">
+                <div className="relative min-w-32">
+                    <button className="text-emerald-200 flex items-center"
+                        onClick={() => setUserMenuOpen(true)}>
+                        <i className="fa-solid fa-user text-xl"></i>
+                        {username}
+                    </button>
+                    {
+                        userMenuOpen && <div className="absolute mt-20 left-0 bg-white bottom-[-46px] rounded-md shadow-md">
+                            <button className="px-4 py-2 text-slate-500 hover:text-emerald-700"
+                            onClick={signOut}>
+                                <i className="mr-2 fa-solid fa-arrow-right-from-bracket"></i>
+                                Sign Out
+                            </button>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </nav>

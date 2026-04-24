@@ -1,9 +1,10 @@
 import NavBar from "shared-components/NavBar";
+import RedirectToSignInIfSignedOut from "shared-components/RedirectToSignInIfSignedOut";
 
 const PlantListPage = () => {
-    return <div>
+    return <RedirectToSignInIfSignedOut>
         <NavBar />
-    </div>
+    </RedirectToSignInIfSignedOut>
 };
 
 export default PlantListPage;
