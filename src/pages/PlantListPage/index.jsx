@@ -3,6 +3,7 @@ import NavBar from "shared-components/NavBar";
 import RedirectToSignInIfSignedOut from "shared-components/RedirectToSignInIfSignedOut";
 import * as plantService from "services/plant";
 import PlantItem from "./PlantItem";
+import LoadingSpinner from "shared-components/LoadingSpinner";
 
 
 const PlantListPage = () => {
@@ -23,9 +24,7 @@ const PlantListPage = () => {
         <NavBar />
         <div className="min-h-screen bg-green-50">
             {isLoading ? (
-                <div className="flex justify-center pt-40">
-                    <i className="fa-duotone fa-spinner-third animate-spin text-3xl text-emerald-600"></i>
-                </div>
+                <LoadingSpinner/>
             ) : (
                 <div className="flex justify-center py-24">
                     <div className=" w-full max-w-5xl">
