@@ -16,7 +16,7 @@ const PlantShowPage = () => {
             const response = await plantService.getPlantById({ id:plantId });
             setPlant(await response.json());
             setIsLoading(false);
-        })();
+        })(plantId);
     }, []);
 
     return <>
