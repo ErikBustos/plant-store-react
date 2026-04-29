@@ -6,3 +6,5 @@ export const addPlantToCart = ({ plantId, quantity, potColor } ) => apiFetch("PO
     quantity,
     pot_color: potColor
 });
+
+export const removeItemFromCart = ({ itemId }) => apiFetch("DELETE", `/cart/${itemId}`) ;

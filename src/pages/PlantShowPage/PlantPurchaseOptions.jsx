@@ -55,7 +55,6 @@ const PlantPurchaseOptions = (props) => {
                         plantId: plant.id,
                         potColor: plant.images[imageIdx].pot_color
                     });
-                    console.log(response.status);
                     setIsLoading(false);
                 }}
                 >

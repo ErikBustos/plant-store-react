@@ -1,7 +1,9 @@
-const CartItem = (props) => {
-    const {item} = props;
+import * as cartService from "services/cart";
 
-    return <div className="flex mx-6 my-8">
+const CartItem = (props) => {
+    const {item, fetchCart} = props;
+
+    return <div className="flex">
         <img className="rounded-md w-28" src={item.image_src}/>
         <div className="flex justify-between mx-4 flex-1">
             <div className="">
@@ -17,8 +19,18 @@ const CartItem = (props) => {
                     {item.quantity}
                 </div>
             </div>
-            <div className="text-slate-500">
-                ${item.quantity * item.price_per_unit}
+            <div className="flex flex-col justify-between items-end">
+                <div className="text-slate-500">
+                    ${item.quantity * item.price_per_unit}
+                </div>
+                <button className="text-sm text-slate-400 hover:text-red-800"
+                    onClick={async () => {
+                        await cartService.removeItemFromCart({ itemId: item.id});
+                        fetchCart();
+                    }}>
+                    <i className=" mr-1 text-base fa-regular fa-trash"></i>
+                    remove
+                </button>
             </div>
         </div>
     </div>
