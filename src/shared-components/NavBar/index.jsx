@@ -54,7 +54,7 @@ const NavBar = () => {
         </nav>
             <ModalWrapper isOpen={cartOpen} onCloseClick={() => setCartOpen(false)}>
                 <CartModal setCartOpen={setCartOpen} />
-            </ModalWrapper>mobileMenuOpen
+            </ModalWrapper>
             <ModalWrapper isOpen={mobileMenuOpen} onCloseClick={() => setMobileMenuOpen(false)}>
                 <MobileMenuModal onCartOpenClick={() => {
                     setCartOpen(true);
