@@ -2,10 +2,13 @@ import { useContext, useState } from "react";
 import SessionContext from "context/SessionContext";
 import { Link } from "react-router-dom";
 import CartModal from "./modals/CartModal";
+import ModalWrapper from "./modals/ModalWrapper";
+import MobileMenuModal from "./modals/MobileMenuModal";
 
 const NavBar = () => {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [cartOpen, setCartOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { username, signOut } = useContext(SessionContext);
 
     return (<>
@@ -18,7 +21,7 @@ const NavBar = () => {
                         Rica's Plants
                     </div>
                 </Link>
-                <div className="relative flex justify-end flex-1">
+                <div className="sm:flex justify-end flex-1 hidden">
                     <div className="relative min-w-32">
                         <button className="text-emerald-200 flex items-center"
                             onClick={() => setUserMenuOpen(true)}>
@@ -42,11 +45,22 @@ const NavBar = () => {
                         cart
                     </button>
                 </div>
+                <button
+                className="flex sm:hidden"
+                onClick={() => setMobileMenuOpen(true)}>
+                    <i className="fa-solid fa-bars text-4xl text-emerald-400"></i>
+                </button>
             </div>
         </nav>
-        {
-            cartOpen && <CartModal setCartOpen={setCartOpen} />
-        }
+            <ModalWrapper isOpen={cartOpen} onCloseClick={() => setCartOpen(false)}>
+                <CartModal setCartOpen={setCartOpen} />
+            </ModalWrapper>mobileMenuOpen
+            <ModalWrapper isOpen={mobileMenuOpen} onCloseClick={() => setMobileMenuOpen(false)}>
+                <MobileMenuModal onCartOpenClick={() => {
+                    setCartOpen(true);
+                    setMobileMenuOpen(false);
+                }}/>
+            </ModalWrapper>
     </>
     );
 };
